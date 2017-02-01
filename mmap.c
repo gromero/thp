@@ -8,7 +8,7 @@
 
 #ifdef __x86_64__
 #define BLOCKSIZE 4 * 1024        // Page size is 4 KiB
-#define FIXED_ADDR 0x400000
+#define FIXED_ADDR 0x100000000
 #elif __PPC64__
 #define BLOCKSIZE 64 * 1024       // Page size is 64 KiB
 #define FIXED_ADDR 0x4000000
@@ -34,7 +34,7 @@ int main(int argc, char **argv)
   p = (uint8_t *)    mmap((void *) FIXED_ADDR,
                      size,
                      PROT_READ | PROT_WRITE,
-                     MAP_PRIVATE | MAP_ANONYMOUS | MAP_NORESERVE | MAP_FIXED, 
+                     MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED | MAP_NORESERVE,
 //                   MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED,
 //                   MAP_PRIVATE | MAP_ANONYMOUS | MAP_HUGETLB | MAP_FIXED,
                      
@@ -45,7 +45,7 @@ int main(int argc, char **argv)
   p = (uint8_t *)    mmap((void *) FIXED_ADDR,
                      size,
                      PROT_READ | PROT_WRITE,
-                     MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED  | MAP_HUGETLB,
+                     MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED | MAP_HUGETLB,
 //                   MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED,
 //                   MAP_PRIVATE | MAP_ANONYMOUS | MAP_HUGETLB | MAP_FIXED,
                      
