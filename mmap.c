@@ -6,11 +6,19 @@
 #include <errno.h>
 #include <string.h>
 
-#define BLOCKSIZE 64 * 1024       // 64 KiB
-#define BLOCKNUM  1024            // BLOCKNUM * 64 KiB (block)
+#ifdef __x86_64__
+#define BLOCKSIZE 4 * 1024        // Page size is 4 KiB
+#define FIXED_ADDR 0x400000
+#elif __PPC64__
+#define BLOCKSIZE 64 * 1024       // Page size is 64 KiB
+#define FIXED_ADDR 0x4000000
+#else
+
+#endif
+
+#define BLOCKNUM  1024            // BLOCKNUM * 64 KiB (page size) =  64 MiB
 #define SIZE BLOCKSIZE * BLOCKNUM // in bytes
 
-#define FIXED_ADDR 0x4000000
 
 int main(int argc, char **argv)
 {
